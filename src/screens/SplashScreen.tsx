@@ -1,9 +1,9 @@
 import { View, Text, Image, ActivityIndicator } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Colors } from '../utils/Constants'
 import { resetAndNavigate } from '../utils/NavigationUtils'
 
-const SplashScreen = () => {
+const SplashScreen: FC = () => {
 
     const tokenCheck = async () => {
         resetAndNavigate('AuthScreen')
