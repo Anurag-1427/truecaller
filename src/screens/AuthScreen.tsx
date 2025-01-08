@@ -1,14 +1,27 @@
-import { View, Text, KeyboardAvoidingView, Image } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Image, Keyboard } from 'react-native'
 import React, { FC, useState } from 'react'
 import CustomSafeAreaView from '../components/global/CustomSafeAreaView';
 import CustomInput from '../components/ui/CustomInput';
 import CustomButton from '../components/ui/CustomButton';
+import { login } from '../service/authService';
+import { navigate, resetAndNavigate } from '../utils/NavigationUtils';
 
 const AuthScreen: FC = () => {
     const [phone, setPhone] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleAuth = async () => { }
+    const handleAuth = async () => {
+        Keyboard.dismiss();
+        setLoading(true);
+        try {
+            await login(phone);
+            resetAndNavigate('DashboardScreen');
+        } catch (error) {
+            navigate('RegisterScreen', { phone: phone })
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <KeyboardAvoidingView
