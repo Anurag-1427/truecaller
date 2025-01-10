@@ -2,6 +2,7 @@ import axios from "axios";
 import { storage } from "../state/storage";
 import { useUserStore } from "../state/userStore";
 import { BASE_URL } from "./config";
+import { appAxios } from "./apiInterceptors";
 
 export const login = async (phoneNumber: any) => {
     try {
@@ -31,6 +32,29 @@ export const signup = async (phoneNumber: any, email: string, name: string) => {
 
     } catch (error) {
         console.error('Signup Error', error);
+        throw error;
+    }
+}
+
+export const findUser = async (phoneNumber: any) => {
+    try {
+        const response = await appAxios.get(`${BASE_URL}/${phoneNumber}`);
+        return response?.data;
+
+    } catch (error) {
+        console.error('findUser Error', error);
+        throw error;
+    }
+}
+
+export const addMultipleContacts = async (users: any) => {
+    try {
+        const response = await appAxios.post(`${BASE_URL}/add-multiple`, { users });
+        console.log("CONTACT SEEDED ✅")
+        return response.data;
+
+    } catch (error) {
+        console.error('Add Multiple contacts Error', error);
         throw error;
     }
 }
