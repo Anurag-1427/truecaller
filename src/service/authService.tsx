@@ -3,6 +3,7 @@ import { storage } from "../state/storage";
 import { useUserStore } from "../state/userStore";
 import { BASE_URL } from "./config";
 import { appAxios } from "./apiInterceptors";
+import { Alert } from "react-native";
 
 export const login = async (phoneNumber: any) => {
     try {
@@ -55,6 +56,19 @@ export const addMultipleContacts = async (users: any) => {
 
     } catch (error) {
         console.error('Add Multiple contacts Error', error);
+        throw error;
+    }
+}
+
+export const reportSpam = async (phoneNumber: any) => {
+    try {
+        const response = await appAxios.put(`${BASE_URL}/report/${phoneNumber}`);
+        console.log(`res in reportSpam: `, response);
+        Alert.alert('User reported as spam')
+        return response.data;
+
+    } catch (error) {
+        console.error('Spam Error', error);
         throw error;
     }
 }
