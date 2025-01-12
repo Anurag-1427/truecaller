@@ -37,6 +37,7 @@ const DashboardScreen: FC = () => {
     }
 
     const renderCallers = ({ item }: any) => {
+        console.log(`renderCaller: `, item)
         return (
             <CallerItem item={item} />
         )
