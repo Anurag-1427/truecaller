@@ -36,7 +36,8 @@ const SplashScreen: FC = () => {
             <View className='absolute bottom-20'>
                 <ActivityIndicator size='large' color={Colors.primary} />
             </View>
-            <Text>SplashScreen</Text>
+            <Text className='mt-2 font-semibold'>TrueCaller</Text>
+            <Text style={{ color: Colors.primary }} className='mt-20 font-bold text-lg'>Take the right call</Text>
         </View>
     )
 }

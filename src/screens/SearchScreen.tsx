@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { findUser } from '../service/authService';
 import CallerItem from '../components/ui/CallerItem';
 import CustomSafeAreaView from '../components/global/CustomSafeAreaView';
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { MagnifyingGlassIcon, XMarkIcon } from 'react-native-heroicons/outline';
 import { Colors } from '../utils/Constants';
 import { goBack } from '../utils/NavigationUtils';
 
@@ -12,6 +12,7 @@ const SearchScreen: FC = () => {
     const [searchData, setSearchData] = useState<any>([]);
 
     const renderCallers = ({ item }: any) => {
+        console.log(`item in renderItem in searchScreen: `, item)
         return <CallerItem isContacts item={item} />
     }
 
@@ -20,7 +21,7 @@ const SearchScreen: FC = () => {
             try {
                 const data = await findUser(searchQuery);
                 console.log(`data in fetchUsers: `, data)
-                setSearchData([data]);
+                setSearchData(data ? [data] : []);
             } catch (error) {
                 console.log(`fetchUsers: `, error);
             }
@@ -33,8 +34,8 @@ const SearchScreen: FC = () => {
 
     return (
         <CustomSafeAreaView classStyle='px-2'>
-            <View className='flex-row w-full items-center justify-between'>
-                <View className='mt-3 w-4/5 flex-row items-center justify-between rounded-full px-4 bg-backgroundLight'>
+            <View className='mt-3 flex-row w-full items-center justify-between'>
+                <View className=' w-4/5 flex-row items-center justify-between rounded-full px-4 bg-backgroundLight'>
                     <MagnifyingGlassIcon size={22} color={Colors.text} />
                     <TextInput
                         placeholder='Search number here'
@@ -46,8 +47,9 @@ const SearchScreen: FC = () => {
                         className='h-16 w-full ml-2'
                     />
                 </View>
-                <TouchableOpacity onPress={() => goBack()} className='w-1/6'>
-                    <Text>Cancel</Text>
+                <TouchableOpacity onPress={() => goBack()} className='m-4' >
+                    {/* <Text>Cancel</Text> */}
+                    <XMarkIcon size={30} />
                 </TouchableOpacity>
             </View>
             <FlatList
