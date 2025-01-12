@@ -8,13 +8,17 @@ import { formatPhoneNumber } from '../../utils/Constants';
 import { ChevronRightIcon } from 'react-native-heroicons/outline';
 
 const CallerItem: FC<{ item: any; isContacts?: boolean }> = ({ item, isContacts }) => {
-    const [dbUser, setdbUser] = useState<any>();
+    console.log(`item in callerItem: `, item);
+    console.log(`isContacts in callerItem: `, isContacts);
+    const [dbUser, setDbUser] = useState<any>();
     const fetchFromDb = async () => {
         try {
             const data = await findUser(item?.phoneNumber);
-            setdbUser(data);
+            console.log(`data in fetchFromDb: `, data);
+            setDbUser(data);
+            console.log(`dbUser in fetchFromDb: `, dbUser);
         } catch (error) {
-            setdbUser(item);
+            setDbUser(item);
             console.log(`Error in CallerItem: `, error);
         }
     }
@@ -27,7 +31,7 @@ const CallerItem: FC<{ item: any; isContacts?: boolean }> = ({ item, isContacts 
 
     return (
         <TouchableOpacity
-            onPress={() => navigate('CallerScreen', { item: dbUser })}
+            onPress={() => navigate('CallerScreen', { item: dbUser ?? item })}
             className='mb-4 flex-row items-center justify-between'
         >
             <View className='flex-row items-center space-x-2'>
