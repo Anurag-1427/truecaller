@@ -1,10 +1,11 @@
-import { View, Text, KeyboardAvoidingView, Image, Keyboard } from 'react-native'
+import { View, Text, KeyboardAvoidingView, Image, Keyboard, ToastAndroid } from 'react-native'
 import React, { FC, useState } from 'react'
 import CustomSafeAreaView from '../components/global/CustomSafeAreaView';
 import CustomInput from '../components/ui/CustomInput';
 import CustomButton from '../components/ui/CustomButton';
 import { login } from '../service/authService';
 import { navigate, resetAndNavigate } from '../utils/NavigationUtils';
+import { Alert } from 'react-native';
 
 const AuthScreen: FC = () => {
     const [phone, setPhone] = useState<string>('');
@@ -12,6 +13,10 @@ const AuthScreen: FC = () => {
 
     const handleAuth = async () => {
         Keyboard.dismiss();
+        if (phone == '') {
+            ToastAndroid.show('Kindly enter phone number', ToastAndroid.SHORT);
+            return;
+        }
         setLoading(true);
         try {
             await login(phone);
