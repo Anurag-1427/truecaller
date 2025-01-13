@@ -3,6 +3,8 @@ import React, { FC, useEffect, useState } from 'react'
 import CallerItem from '../ui/CallerItem';
 import Contacts from 'react-native-contacts'
 import { addMultipleContacts } from '../../service/authService';
+import { Colors } from '../../utils/Constants';
+import { MagnifyingGlassIcon, UserCircleIcon, UserIcon } from 'react-native-heroicons/outline';
 
 const ContactList: FC<{ isRefresh: boolean }> = ({ isRefresh }) => {
     const [contacts, setContacts] = useState<any>([]);
@@ -74,6 +76,14 @@ const ContactList: FC<{ isRefresh: boolean }> = ({ isRefresh }) => {
                 data={contacts?.slice(0, 10) || []}
                 keyExtractor={(item: any) => item.phoneNumber}
                 renderItem={renderCallers}
+                ListEmptyComponent={
+                    <View className='mt-5 items-center'>
+                        <View className='rounded-full bg-backgroundLight self-center p-5'>
+                            <UserIcon size={26} color={Colors.text} />
+                        </View>
+                        <Text className='mt-2 font-medium text-gray-500'>No Contacts</Text>
+                    </View>
+                }
             />
         </View>
     )
